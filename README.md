@@ -14,3 +14,8 @@
 > // https://mvnrepository.com/artifact/com.google.code.gson/gson
 implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
 * #### Add your absolute path in the *book* method to make run in the test.
+# *Lab 9* Web requests
+
+## For today lab we start reading data from API using buffer reader and input stream to deal correctly with it.
+### `apiQuotes` 
+#### we create this class to get data from api and save it in the json file.

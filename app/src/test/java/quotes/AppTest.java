@@ -3,38 +3,38 @@
  */
 package quotes;
 
+
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+
+import static org.junit.Assert.*;
+
 
 public class AppTest {
 
-    @Test
-    public void testBook() throws FileNotFoundException {
+    @Test public void testQuotes() throws IOException {
         App classUnderTest = new App();
+        String apiURL2 = "http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en";
+        HttpURLConnection connection = classUnderTest.getHttpURLConnection(apiURL2);
+        BufferedReader reader= classUnderTest.getBufferedReader(connection);
 
-        assertEquals("java.lang.String", classUnderTest.book().getClass().getName());
-        assertTrue("recentQuotes{\n" +
-                "tags=null\n" +
-                ", author='Ron Swanson'\n" +
-                ", likes='null'\n" +
-                ", text='\"One rage every three months is permitted. Try not to hurt anyone who doesn't deserve it.\"'}\n", classUnderTest.book().contains("author"));
+//assertEquals("recentQuotes{\n" +
+//        "tags=[]\n" +
+//        ", author='George Orwell'\n" +
+//        ", likes='79 likes'\n" +
+//        ", text=' “His answer to every problem, every setback was “I will work harder!” —which he had adopted as his personal motto.” '}", classUnderTest.writeGson(reader).get(5));
+//
+//assertEquals("recentQuotes{\n" +
+//        "tags=[monsters]\n" +
+//        ", author='Chuck Klosterman'\n" +
+//        ", likes='0 likes'\n" +
+//        ", text=' “It's easier to believe there's a monster under the bed if you've spent the last six months arguing with a monster.” '}",classUnderTest.readQuote()[10]);
+   assertTrue(classUnderTest.readQuote().length ==159);
+   assertTrue(classUnderTest.writeGson(reader).size()>158);
     }
 
-    @Test
-    public void testBook2() throws FileNotFoundException {
-        Reader reader = new FileReader("src/main/resources/recentquotes.json");
-
-        App classUnderTest = new App();
-        assertEquals("recentQuotes{\n" +
-                "tags=[monsters]\n" +
-                ", author='Chuck Klosterman'\n" +
-                ", likes='0 likes'\n" +
-                ", text=' “It's easier to believe there's a monster under the bed if you've spent the last six months arguing with a monster.” '}", classUnderTest.book2(10,reader));
-    }
 }
